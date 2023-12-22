@@ -43,7 +43,20 @@ class MyApp extends StatelessWidget {
                   ));
                 },
                 icon: const Icon(Icons.settings)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.message)),
+            IconButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    content: const Text('Message!'),
+                    duration: const Duration(milliseconds: 500),
+                    action: SnackBarAction(
+                      label: 'Undo',
+                      onPressed: () {},
+                    ),
+                  ));
+                },
+                icon: const Icon(Icons.message)),
           ],
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

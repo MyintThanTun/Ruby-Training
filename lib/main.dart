@@ -3,17 +3,23 @@ import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: const MyApp(),
+    home: MyApp(),
     theme: ThemeData(primarySwatch: Colors.green),
     debugShowCheckedModeBanner: false,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  List<Contact> list = List.generate(50, (index) {
+    return Contact(
+        name: 'Name $index', phone: 'Phone $index', address: 'Address $index');
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,34 +54,30 @@ class MyApp extends StatelessWidget {
           title: const Text('My Application'),
           centerTitle: false,
         ),
-        body: Container(
-          height: 500,
-          width: 500,
-          color: Colors.red,
-          child: Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 20,
-            runSpacing: 20,
-            alignment: WrapAlignment.spaceBetween,
-            children: [
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 1')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 2')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 3')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 4')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 5')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 6')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 7')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 8')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 9')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 10')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 11')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 12')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 13')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 13')),
-              ElevatedButton(onPressed: () {}, child: const Text('Hello 13')),
-            ],
-          ),
+        body: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, position) {
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Card(
+                margin: const EdgeInsets.all(8),
+                child: ListTile(
+                  title: Text(list[position].name),
+                  subtitle: Text(list[position].phone),
+                  trailing: Text(list[position].address),
+                  leading: const Icon(Icons.phone_android),
+                ),
+              ),
+            );
+          },
         ));
   }
+}
+
+class Contact {
+  final String name;
+  final String phone;
+  final String address;
+
+  Contact({required this.name, required this.phone, required this.address});
 }
